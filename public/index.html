@@ -7,7 +7,7 @@
   body {
     margin: 0;
     overflow: hidden;
-    background: black;
+    background: linear-gradient(#ffe6ec, #ffffff);
   }
   canvas {
     display: block;
@@ -16,9 +16,11 @@
 </head>
 <body>
 
-<!-- Three.js 稳定老版本（支持 OrbitControls 老写法） -->
+<!-- Three.js 稳定版本 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
+
+<!-- OrbitControls 正确路径 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
 
 <script>
   // 场景
@@ -33,8 +35,8 @@
   );
   camera.position.set(0, 2, 6);
 
-  // 渲染器
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  // 渲染器（透明背景，让渐变可见）
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -43,7 +45,7 @@
   controls.enableDamping = true;
 
   // 灯光
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
   const light = new THREE.DirectionalLight(0xff88aa, 1);
   light.position.set(5, 10, 7);
   scene.add(light);
@@ -56,7 +58,7 @@
   heartShape.bezierCurveTo(2.5, 6, 5, 3, 3, 0);
   heartShape.bezierCurveTo(1.5, -1.5, 0, 0, 0, 0);
 
-  // 拉伸成3D
+  // 拉伸成 3D
   const geometry = new THREE.ExtrudeGeometry(heartShape, {
     depth: 1.5,
     bevelEnabled: true,
@@ -67,7 +69,7 @@
 
   const material = new THREE.MeshPhongMaterial({
     color: 0xff3366,
-    shininess: 120,
+    shininess: 150,
     emissive: 0x220011
   });
 
