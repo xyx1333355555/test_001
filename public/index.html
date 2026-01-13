@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>3D Heart</title>
-  <style>
-    body { margin: 0; overflow: hidden; background: black; }
-    canvas { display: block; }
-  </style>
+<meta charset="UTF-8">
+<title>3D Heart</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+  }
+  canvas {
+    display: block;
+  }
+</style>
 </head>
 <body>
-<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
-<script src="https://unpkg.com/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+
+<!-- Three.js 稳定老版本（支持 OrbitControls 老写法） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
 
 <script>
   // 场景
@@ -35,12 +43,12 @@
   controls.enableDamping = true;
 
   // 灯光
-  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const light = new THREE.DirectionalLight(0xff88aa, 1);
   light.position.set(5, 10, 7);
   scene.add(light);
 
-  // ❤ 心形路径（数学定义）
+  // ❤ 心形路径
   const heartShape = new THREE.Shape();
   heartShape.moveTo(0, 0);
   heartShape.bezierCurveTo(0, 0, -1.5, -1.5, -3, 0);
@@ -59,7 +67,7 @@
 
   const material = new THREE.MeshPhongMaterial({
     color: 0xff3366,
-    shininess: 150,
+    shininess: 120,
     emissive: 0x220011
   });
 
@@ -74,15 +82,15 @@
     controls.update();
     renderer.render(scene, camera);
   }
-
   animate();
 
-  // 自适应手机屏幕
+  // 自适应手机
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 </script>
+
 </body>
 </html>
