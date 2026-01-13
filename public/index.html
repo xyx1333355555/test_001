@@ -1,98 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>3D Heart</title>
 <style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    background: linear-gradient(#ffe6ec, #ffffff);
-  }
-  canvas {
-    display: block;
-  }
+body {background-color: white;}
+.heart { 
+  position: relative; 
+  width: 100px;
+  height: 90px;
+  background-color: pink;
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+  transform: rotate(-45deg);
+}
+.heart:after {
+  content: "";
+  position: absolute;
+  left: 25px;
+  top: -50px;
+  width: 50px;
+  height: 80px;
+  background-color: pink;
+  border-radius: 50%;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+}
 </style>
 </head>
 <body>
 
-<!-- Three.js 稳定版本 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<!-- OrbitControls 正确路径 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
-
-<script>
-  // 场景
-  const scene = new THREE.Scene();
-
-  // 相机
-  const camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.set(0, 2, 6);
-
-  // 渲染器（透明背景，让渐变可见）
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  // 控制（支持手机拖动）
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-
-  // 灯光
-  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-  const light = new THREE.DirectionalLight(0xff88aa, 1);
-  light.position.set(5, 10, 7);
-  scene.add(light);
-
-  // ❤ 心形路径
-  const heartShape = new THREE.Shape();
-  heartShape.moveTo(0, 0);
-  heartShape.bezierCurveTo(0, 0, -1.5, -1.5, -3, 0);
-  heartShape.bezierCurveTo(-5, 3, -2.5, 6, 0, 8);
-  heartShape.bezierCurveTo(2.5, 6, 5, 3, 3, 0);
-  heartShape.bezierCurveTo(1.5, -1.5, 0, 0, 0, 0);
-
-  // 拉伸成 3D
-  const geometry = new THREE.ExtrudeGeometry(heartShape, {
-    depth: 1.5,
-    bevelEnabled: true,
-    bevelThickness: 0.5,
-    bevelSize: 0.3,
-    bevelSegments: 20
-  });
-
-  const material = new THREE.MeshPhongMaterial({
-    color: 0xff3366,
-    shininess: 150,
-    emissive: 0x220011
-  });
-
-  const heart = new THREE.Mesh(geometry, material);
-  heart.scale.set(0.25, 0.25, 0.25);
-  scene.add(heart);
-
-  // 动画
-  function animate() {
-    requestAnimationFrame(animate);
-    heart.rotation.y += 0.01;
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // 自适应手机
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-</script>
+<div class="heart"></div>
 
 </body>
 </html>
